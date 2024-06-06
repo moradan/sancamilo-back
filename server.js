@@ -1,10 +1,18 @@
 const http = require("http");
 
-const server = http.createServer(funcionalidad);
-
-async function funcionalidad(req, resp) {}
+const server = http.createServer(listener);
 
 const PORT = 3000;
 
-server.listen(PORT, () => console.log(`Servidor escuchando a ${PORT}`));
+/**
+ * 
+ * @param {http.IncomingMessage} req 
+ * @param {http.ServerResponse} res 
+ */
+function listener(req, res) {
+    res.writeHead(200);
+    res.end("El servidor aun no esta listo para mostrar la pagina.")
+}
+
+server.listen(PORT, () => console.log(`Servidor escuchando en puerto ${PORT}`));
 
