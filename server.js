@@ -8,30 +8,7 @@ const rutaArchivo = path.join(__dirname, "../sancamilo-front/index.html");
 const indiceHTML = cargarArchivo();
 
 /**
- * @description el objeto servidor que se va a utilizar para controlar el lifecycle y la configuracion del servidor.
- * @argument {http.RequestListener} servirFront
- */
-const server = http.createServer(servirFront);
-
-/**
- * @description comienza a escuchar pedidos en el puerto indicado por el argumento PORT.
- * @argument {() => void | undefined} inicializar es un callback que se llama una vez que el servidor ha comenzado a escuchar
- * pedidos en el puerto indicado.
- */
-server.listen(PORT, inicializar);
-
-function cargarArchivo() {
-  try {
-    return fs.readFileSync(rutaArchivo);
-  } catch (/** @type {Error} */ error) {
-    if (error.code === "ENOENT") {
-      noEncontrado(req, res);
-    }
-  }
-}
-
-/**
- * @description Se usa para simular un servidor que no esta disponible.
+ *
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
@@ -63,17 +40,24 @@ function noEncontrado(req, res) {
 function servirFront(req, res) {
   if (MANTENIMIENTO) {
     mantenimiento(req, res);
-  } else {
+    return;
+  }
+
+  const rutaArchivo = path.join(__dirname, "../sancamilo-front/index.html");
+  try {
+    const indiceHTML = fs.readFileSync(rutaArchivo);
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
     res.end(indiceHTML);
+  } catch (/** @type {Error} */ error) {
+    if (error.code === "ENOENT") {
+      noEncontrado(req, res);
+    }
   }
 }
 
-/**
- * @description Inicializa el servidor. Por el momento lo unico que hace es
- * mostrar un mensaje por consola para confirmar que el servidor ya inicio.
- */
 function inicializar() {
   console.log(`Servidor escuchando en puerto ${PORT}`);
 }
+
+server.listen(PORT, inicializar);
