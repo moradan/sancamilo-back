@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const PORT = 3000;
 const MANTENIMIENTO = false;
-const rutaArchivo = path.join(__dirname, "../sancamilo-front/index.html");
+const rutaArchivo = path.join(__dirname, "/public/index.html");
 const indiceHTML = cargarArchivo();
 
 /**
