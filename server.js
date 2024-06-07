@@ -19,15 +19,31 @@ const server = http.createServer(servirFront);
  */
 server.listen(PORT, inicializar);
 
-function cargarArchivo() {
+/**
+ * @description devuelve el contenido del archivo ubicado en la ruta rutaArchivo (incluye el nombre del archivo.)
+ * @param {string} urlPedido
+ * @returns {Buffer | undefined}
+ */
+function cargarArchivo(urlPedido) {
+  rutaArchivo = urlPedido;
+  console.log(`Pedido: ${rutaArchivo}`);
+
+  if (rutaArchivo === "/") {
+    rutaArchivo = urlPedido + "index.html";
+    console.log(`Se cambia por: ${rutaArchivo}`);
+  }
+
+  rutaArchivo = path.join(__dirname, "/public", rutaArchivo);
+  console.log(`Se cambia por: ${rutaArchivo}`);
+
+  console.log(`Intentamos leer el archivo: ${rutaArchivo}`);
   try {
     return fs.readFileSync(rutaArchivo);
   } catch (/** @type {Error} */ error) {
-    if (error.code === "ENOENT") {
+    console.log(error.code);
       return undefined;
     }
   }
-}
 
 /**
  * @description Se usa para simular un servidor que no esta disponible.
