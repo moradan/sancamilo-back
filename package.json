@@ -4,9 +4,9 @@
   "description": "servidor para el sitio web de la clinica san camilo, proyecto de CaC",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "",
   "license": "MIT"
 }
+
