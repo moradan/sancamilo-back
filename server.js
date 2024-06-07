@@ -51,11 +51,11 @@ function cargarArchivo(urlPedido) {
  * @param {http.ServerResponse} res
  */
 function mantenimiento(req, res) {
+  console.log(`El servidor no se encuentra disponible.`);
   res.writeHead(503);
   res.end(
     "503 Server Unavailable\nEl servidor aun no esta listo para mostrar la pagina."
   );
-  return;
 }
 
 /**
@@ -64,7 +64,8 @@ function mantenimiento(req, res) {
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
-function noEncontrado(req, res) {
+function noEncontrado(res) {
+  console.log(`No se encontro el archivo pedido: ${rutaArchivo}`);
   res.writeHead(404);
   res.end("404 La pagina no se encontro.");
 }
