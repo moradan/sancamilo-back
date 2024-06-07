@@ -41,9 +41,9 @@ function cargarArchivo(urlPedido) {
     return fs.readFileSync(rutaArchivo);
   } catch (/** @type {Error} */ error) {
     console.log(error.code);
-      return undefined;
-    }
+    return undefined;
   }
+}
 
 /**
  * @description Se usa para simular un servidor que no esta disponible.
@@ -79,14 +79,20 @@ function noEncontrado(res) {
 function servirFront(req, res) {
   if (MANTENIMIENTO) {
     mantenimiento(req, res);
-  }
-  if (!indiceHTML) {
-    noEncontrado(req, res);
+    return;
   }
 
-  res.setHeader("Content-Type", "text/html");
-  res.writeHead(200);
-  res.end(indiceHTML);
+  /** @type {Buffer | undefined} */
+  const contenido = cargarArchivo(req.url);
+
+  if (!contenido) {
+    noEncontrado(res);
+    return;
+  }
+
+  /** @type {string} */
+  const tipo = parseTipoContenido();
+  servir(contenido, tipo, res);
 }
 
 /**
@@ -95,4 +101,45 @@ function servirFront(req, res) {
  */
 function inicializar() {
   console.log(`Servidor escuchando en puerto ${PORT}`);
+}
+
+/**
+ * @description devuelve el tipo de contenido MIME basndose en la extension del archivo
+ * @param {string} rutaArchivo  la ruta completa del archivo incluyendo el nombre del archivo
+ * @returns {string}
+ */
+function parseTipoContenido() {
+  const extension = path.extname(rutaArchivo);
+  const tiposMIME = {
+    ".html": "text/html",
+    ".js": "text/javascript",
+    ".css": "text/css",
+    ".json": "application/json",
+    ".png": "image/png",
+    ".jpg": "image/jpg",
+    ".gif": "image/gif",
+    ".svg": "image/svg+xml",
+    ".wav": "audio/wav",
+    ".mp4": "video/mp4",
+    ".woff": "application/font-woff",
+    ".ttf": "application/font-ttf",
+    ".eot": "application/vnd.ms-fontobject",
+    ".otf": "application/font-otf",
+    ".wasm": "application/wasm",
+  };
+
+  // el default es texto simple si la extension no esta en la lista de tipos MIME
+  return tiposMIME[extension] || "application/octet-stream";
+}
+
+/**
+ * @description una vez que tenemos el contenido pedido e identificamos el tipo MIME completamos la respuesta con esos datos
+ * @param {Buffer} contenido
+ * @param {string} tipo
+ * @param {http.ServerResponse} res
+ */
+function servir(contenido, tipo, res) {
+  console.log(`El archivo es de tipo: ${tipo}`);
+  res.writeHead(200, { "Content-Type": tipo });
+  res.end(contenido, "utf-8");
 }
