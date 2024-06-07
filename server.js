@@ -5,6 +5,7 @@ const fs = require("fs");
 const server = http.createServer(servirFront);
 
 const PORT = 3000;
+const MANTENIMIENTO = false;
 
 /**
  * 
@@ -16,19 +17,39 @@ function mantenimiento(req, res) {
     res.end("503 Server Unavailable\nEl servidor aun no esta listo para mostrar la pagina.")
 }
 
+
+/**
+ * 
+ * @param {http.IncomingMessage} req 
+ * @param {http.ServerResponse} res 
+ */
+function noEncontrado(req, res) {
+    res.writeHead(404);
+    res.end("404 La pagina no se encontro.");
+}
+
 /**
  * 
  * @param {http.IncomingMessage} req 
  * @param {http.ServerResponse} res 
  */
 function servirFront(req, res) {
-    res.setHeader("Content-Type", "text/html");
-    res.writeHead(200);
+    if(MANTENIMIENTO) {
+        mantenimiento(req, res);
+        return;
+    }
 
     const rutaArchivo = path.join(__dirname, '../sancamilo-front/index.html');
-    const indiceHTML = fs.readFileSync(rutaArchivo);
-
-    res.end(indiceHTML);
+    try {
+        const indiceHTML = fs.readFileSync(rutaArchivo);
+        res.setHeader("Content-Type", "text/html");
+        res.writeHead(200);
+        res.end(indiceHTML);
+    } catch (/** @type {Error} */ error) {
+        if (error.code === 'ENOENT') {
+            noEncontrado(req, res);
+        }
+    }
 }
 
 function inicializar() {
@@ -36,4 +57,3 @@ function inicializar() {
 }
 
 server.listen(PORT, inicializar); 
-
