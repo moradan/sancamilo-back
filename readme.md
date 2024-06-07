@@ -1,6 +1,8 @@
+![Marquesina](/GitHub-social.jpg "Marquesina para social media")
+
 # Proyecto Codo a Codo - Servidor San Camilo
 
-Este proyecto integrador de Codo a Codo (CaC) involucra la creacion de un servidor en javascript para desplegar en NodeJS que sirva como backend para la pagina de la imaginaria clinica San Camilo.
+Este proyecto integrador de Codo a Codo (CaC) involucra la creacion de un servidor en javascript para desplegar en NodeJS que sirva como backend para la pagina de la imaginaria clinica San Camilo.  
 El servidor tiene que cumplir con las siguientes consignas:
 
 - La base de datos debe desarrollarse con MySQL, tener al menos 4 tablas, con al menos 4 diferentes tipos de datos.
