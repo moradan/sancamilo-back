@@ -1,11 +1,10 @@
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+let rutaArchivo = "";
 
 const PORT = 3000;
 const MANTENIMIENTO = false;
-const rutaArchivo = path.join(__dirname, "/public/index.html");
-const indiceHTML = cargarArchivo();
 
 /**
  * @description el objeto servidor que se va a utilizar para controlar el lifecycle y la configuracion del servidor.
