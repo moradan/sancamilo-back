@@ -1,0 +1,12 @@
+{
+  "source": {
+    "include": ["src", "./"],
+    "exclude": ["node_modules"]
+  },
+  "opts": {
+    "destination": "../documentation",
+    "recurse": true,
+    "template": "templates/default",
+    "readme": "./README.md"
+  }
+}

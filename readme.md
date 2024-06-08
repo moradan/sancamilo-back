@@ -1,4 +1,4 @@
-![Marquesina](/GitHub-social.jpg "Marquesina para social media")
+![Marquesina](./GitHub-social.jpg "Marquesina para social media")
 
 # Proyecto Codo a Codo - Servidor San Camilo
 

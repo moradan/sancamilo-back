@@ -14,11 +14,6 @@ const MANTENIMIENTO = false;
  */
 const server = http.createServer(servirFront);
 
-/**
- * @description comienza a escuchar pedidos en el puerto indicado por el argumento PORT.
- * @argument {() => void | undefined} inicializar es un callback que se llama una vez que el servidor ha comenzado a escuchar
- * pedidos en el puerto indicado.
- */
 server.listen(PORT, inicializar);
 
 /**
@@ -106,8 +101,8 @@ function inicializar() {
 }
 
 /**
- * @description devuelve el tipo de contenido MIME basndose en la extension del archivo
- * @param {string} rutaArchivo  la ruta completa del archivo incluyendo el nombre del archivo
+ * @description devuelve el tipo de contenido MIME basndose en la extension del archivo contenido en la variable
+ * global rutaArchivo.
  * @returns {string}
  */
 function parseTipoContenido() {
