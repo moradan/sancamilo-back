@@ -1,4 +1,4 @@
 export class Formulario {}
-export class FormularioLogin {}
-export class FormularioRegistrarse {}
-export class FormularioTurno {}
+export class FormularioLogin extends Formulario {}
+export class FormularioRegistrarse extends Formulario {}
+export class FormularioTurno extends Formulario {}
