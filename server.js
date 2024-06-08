@@ -1,3 +1,5 @@
+import { Formulario } from "./src/formulario";
+
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
@@ -143,3 +145,9 @@ function servir(contenido, tipo, res) {
   res.writeHead(200, { "Content-Type": tipo });
   res.end(contenido, "utf-8");
 }
+
+/**
+ *
+ * @param {Formulario} formulario
+ */
+function procesarFormulario(formulario) {}
