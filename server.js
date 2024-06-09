@@ -1,12 +1,9 @@
-import { Formulario } from "./src/formulario";
-
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
 let rutaArchivo = "";
 
 const PORT = 3000;
-const MANTENIMIENTO = false;
 
 /**
  * @description el objeto servidor que se va a utilizar para controlar el lifecycle y la configuracion del servidor.
@@ -43,19 +40,6 @@ function cargarArchivo(urlPedido) {
 }
 
 /**
- * @description Se usa para simular un servidor que no esta disponible.
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
- */
-function mantenimiento(req, res) {
-  console.log(`El servidor no se encuentra disponible.`);
-  res.writeHead(503);
-  res.end(
-    "503 Server Unavailable\nEl servidor aun no esta listo para mostrar la pagina."
-  );
-}
-
-/**
  * @description respondemos con 404 cuando el servidor no puede resolver la ruta del archivo
  * que se pidio.
  * @param {http.IncomingMessage} req
@@ -74,11 +58,6 @@ function noEncontrado(res) {
  * @param {http.ServerResponse} res
  */
 function servirFront(req, res) {
-  if (MANTENIMIENTO) {
-    mantenimiento(req, res);
-    return;
-  }
-
   /** @type {Buffer | undefined} */
   const contenido = cargarArchivo(req.url);
 
@@ -140,9 +119,3 @@ function servir(contenido, tipo, res) {
   res.writeHead(200, { "Content-Type": tipo });
   res.end(contenido, "utf-8");
 }
-
-/**
- *
- * @param {Formulario} formulario
- */
-function procesarFormulario(formulario) {}
