@@ -1,15 +1,19 @@
+import url from "url";
+
 /**
  * Formulario base para derivar los demas formularios.
  */
 export class Formulario {
   /**
-   * @param {string} metodo - The method of the form.
+   * @type {url.UrlWithParsedQuery}
    */
-  constructor(metodo) {
-    /**
-     * @type {string}
-     */
-    this.metodo = metodo;
+  #pedido;
+
+  /**
+   * @param {url.UrlWithParsedQuery}
+   */
+  constructor(pedido) {
+    this.#pedido = pedido;
   }
 
   /**
@@ -17,7 +21,7 @@ export class Formulario {
    * @returns {Buffer} Devuelve el contenido que el servidor debe mandar en la respuesta http.
    */
   procesar() {
-    const contenido = "Recibimos el formulario";
-    return Buffer.from(data);
+    console.log("Los argumentos son:", this.#pedido.query);
+    return null;
   }
 }

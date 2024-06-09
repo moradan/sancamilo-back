@@ -95,14 +95,9 @@ function servirFront(req, res) {
 
   const pedido = url.parse(req.url, true);
   console.log("El end point es:", pedido.pathname);
-  console.log("Los argumentos son:", pedido.query);
-  // TODO Revisar si el pedido http viene de un formulario. De ser asi, ejecutar este bloque
-  // TODO Crear un objeto formulario que contenga el metodo del pedido http y si viniese de un formulario los datos del formulario
-  const formulario = new Formulario("GET");
-  // TODO Procesar el formulario:
-  //    validar los datos,
-  //    realizar operaciones de base de datos,
-  //    devolver el contenido que el server debe incluir en la respuesta
+
+  const formulario = new Formulario(pedido);
+  contenido = formulario.procesar();
 
   if (!contenido) {
     contenido = cargarArchivo(pedido.pathname);
