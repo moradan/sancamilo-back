@@ -1,17 +1,38 @@
+/*
+Este bloque contiene los requires/imports del proyecto
+*/
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+
+/*
+Este bloque contiene las instrucciones a ejecutar para poner en marcha el servidor
+*/
+
+/** @type {url} contiene el url del archivo cuyo contenido vamos a servir */
 let rutaArchivo = "";
 
+/** @type {number} el puerto donde el servidor va a recibir pedidos */
 const PORT = 3000;
 
 /**
  * @description el objeto servidor que se va a utilizar para controlar el lifecycle y la configuracion del servidor.
- * @argument {http.RequestListener} servirFront
+ * @argument {http.RequestListener} servirFront para crear un sever debemos proveer un listener que va a recibir el pedido http y completar la respuesta.
+ * En este caso usamos la funcion servirFront que se encarga de servir nuestro frontend.
  */
 const server = http.createServer(servirFront);
 
+/**
+ * Comenzamos a recibir pedidos http.
+ * @argument {number} PORT el puerto por el cuel el servidor va a recibir pedidos.
+ * @argument {Function} inicializar  En nuestro caso pasamos una funcion que anuncia por consola que el servidor esta funcionando
+ * y el puerto por el que recibe pedidos.
+ */
 server.listen(PORT, inicializar);
+
+/*
+Aca comienza la lista de funciones locales que usamos en el servidor.
+*/
 
 /**
  * @description devuelve el contenido del archivo ubicado en la ruta rutaArchivo (incluye el nombre del archivo.)
@@ -62,6 +83,13 @@ function servirFront(req, res) {
   let contenido;
   /** @type {string} */
   let tipo = "text/html";
+
+  // TODO Revisar si el pedido http viene de un formulario. De ser asi, ejecutar este bloque
+  // TODO Crear un objeto formulario que contenga el metodo del pedido http y si viniese de un formulario los datos del formulario
+  // TODO Procesar el formulario:
+  //    validar los datos,
+  //    realizar operaciones de base de datos,
+  //    devolver el contenido que el server debe incluir en la respuesta
 
   if (!contenido) {
     contenido = cargarArchivo(req.url);
