@@ -81,10 +81,11 @@ function noEncontrado(res) {
 }
 
 /**
- * @description este listener intenta servir index.html del frontend. si no se encuentra el archivo
- * delega a una funcion para responder con 404
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
+ * @description Esta funcion es llamada cada vez que el server recibe un pedido http. Esta funcion inspecciona el pedido,
+ * ejecuta las acciones de base de datos que sean pertinentes y general el contenido que debe servir en la respuesta.
+ * @param {http.IncomingMessage} req El pedido http que recibimos.
+ * @param {http.ServerResponse} res La respuesta que vamos a mandar de regreso a quie hizo el pedido http; aquí vamos a escribir
+ * el contenido que el servidor decida mandar.
  */
 function servirFront(req, res) {
   console.log("PROCESANDO PEDIDO ********************");
