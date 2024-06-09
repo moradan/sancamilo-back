@@ -1,7 +1,7 @@
 /*
 Este bloque contiene los requires/imports del proyecto
 */
-import { Formulario } from "./src/formulario.js";
+import Formulario from "./src/formulario.js";
 import fs from "fs";
 import http from "http";
 import path from "path";
