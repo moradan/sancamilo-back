@@ -2,6 +2,7 @@
   "name": "sancamilo-back",
   "version": "0.1.0",
   "description": "servidor para el sitio web de la clinica san camilo, proyecto de CaC",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
