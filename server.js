@@ -1,9 +1,17 @@
 /*
 Este bloque contiene los requires/imports del proyecto
 */
-const http = require("http");
-const path = require("path");
-const fs = require("fs");
+import { Formulario } from "./src/formulario.js";
+import fs from "fs";
+import http from "http";
+import path from "path";
+import { fileURLToPath } from "url";
+import url from "url";
+
+/** @type {string} la ruta de este archivo server.js en el servicio en el que este hospedado. */
+const __filename = fileURLToPath(import.meta.url);
+/** @type {string} el nombre del directorio en donde se encuentra este archivo. */
+const __dirname = path.dirname(__filename);
 
 /*
 Este bloque contiene las instrucciones a ejecutar para poner en marcha el servidor
@@ -79,20 +87,25 @@ function noEncontrado(res) {
  * @param {http.ServerResponse} res
  */
 function servirFront(req, res) {
+  console.log("PROCESANDO PEDIDO ********************");
   /** @type {Buffer | undefined} */
   let contenido;
   /** @type {string} */
   let tipo = "text/html";
 
+  const pedido = url.parse(req.url, true);
+  console.log("El end point es:", pedido.pathname);
+  console.log("Los argumentos son:", pedido.query);
   // TODO Revisar si el pedido http viene de un formulario. De ser asi, ejecutar este bloque
   // TODO Crear un objeto formulario que contenga el metodo del pedido http y si viniese de un formulario los datos del formulario
+  const formulario = new Formulario("GET");
   // TODO Procesar el formulario:
   //    validar los datos,
   //    realizar operaciones de base de datos,
   //    devolver el contenido que el server debe incluir en la respuesta
 
   if (!contenido) {
-    contenido = cargarArchivo(req.url);
+    contenido = cargarArchivo(pedido.pathname);
 
     if (!contenido) {
       noEncontrado(res);
@@ -149,7 +162,7 @@ function parseTipoContenido() {
  * @param {http.ServerResponse} res
  */
 function servir(contenido, tipo, res) {
-  console.log(`El archivo es de tipo: ${tipo}`);
+  console.log("Sirviendo un archivo de tipo:", tipo);
   res.writeHead(200, { "Content-Type": tipo });
   res.end(contenido, "utf-8");
 }
