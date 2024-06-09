@@ -59,15 +59,21 @@ function noEncontrado(res) {
  */
 function servirFront(req, res) {
   /** @type {Buffer | undefined} */
-  const contenido = cargarArchivo(req.url);
+  let contenido;
+  /** @type {string} */
+  let tipo = "text/html";
 
   if (!contenido) {
-    noEncontrado(res);
-    return;
+    contenido = cargarArchivo(req.url);
+
+    if (!contenido) {
+      noEncontrado(res);
+      return;
+    }
+
+    tipo = parseTipoContenido();
   }
 
-  /** @type {string} */
-  const tipo = parseTipoContenido();
   servir(contenido, tipo, res);
 }
 
