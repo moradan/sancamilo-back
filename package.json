@@ -8,6 +8,9 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^9.4.0",
+    "eslint-plugin-jsdoc": "^48.2.9"
+  }
 }
-
