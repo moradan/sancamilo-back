@@ -2,7 +2,7 @@
   "name": "sancamilo-back",
   "version": "0.1.0",
   "description": "servidor para el sitio web de la clinica san camilo, proyecto de CaC",
-  "type": "module",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,12 +11,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.4.0",
-    "eslint": "^9.4.0",
-    "eslint-plugin-jsdoc": "^48.2.9",
     "globals": "^15.4.0"
   },
   "dependencies": {
+    "@types/express": "^4.17.21",
     "express": "^4.19.2"
   }
 }
