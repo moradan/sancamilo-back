@@ -6,7 +6,7 @@ import fs from "fs";
 import http from "http";
 import path from "path";
 import { fileURLToPath } from "url";
-import url from "url";
+import URL from "url";
 
 /** @type {string} la ruta de este archivo server.js en el servicio en el que este hospedado. */
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +17,19 @@ const __dirname = path.dirname(__filename);
 Este bloque contiene las instrucciones a ejecutar para poner en marcha el servidor
 */
 
-/** @type {url} contiene el url del archivo cuyo contenido vamos a servir */
+/** @type {Buffer} El contenido del recurso que vamos a servir en la respuesta. */
+let contenido;
+
+/** @type {http.ServerResponse} Mantengo una referencia global en todo mi servidor al objeto response que recibimos junto con el pedido http. */
+let respuesta;
+
+/** @type {http.IncomingMessage} Mantengo una referencia global al pedido http que recibimos. */
+let pedido;
+
+/** @type {string} Contiene el tipo MIME para setear en el header de la respuesta. */
+let tipoMIME;
+
+/** @type {string} contiene el url del archivo cuyo contenido vamos a servir */
 let rutaArchivo = "";
 
 /** @type {number} el puerto donde el servidor va a recibir pedidos */
@@ -44,15 +56,14 @@ Aca comienza la lista de funciones locales que usamos en el servidor.
 
 /**
  * @description devuelve el contenido del archivo ubicado en la ruta rutaArchivo (incluye el nombre del archivo.)
- * @param {string} urlPedido
  * @returns {Buffer | undefined}
  */
-function cargarArchivo(urlPedido) {
-  rutaArchivo = urlPedido;
+function cargarArchivo() {
+  rutaArchivo = pedido.url;
   console.log(`Pedido: ${rutaArchivo}`);
 
   if (rutaArchivo === "/") {
-    rutaArchivo = urlPedido + "index.html";
+    rutaArchivo = rutaArchivo + "index.html";
     console.log(`Se cambia por: ${rutaArchivo}`);
   }
 
@@ -71,13 +82,11 @@ function cargarArchivo(urlPedido) {
 /**
  * @description respondemos con 404 cuando el servidor no puede resolver la ruta del archivo
  * que se pidio.
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
  */
-function noEncontrado(res) {
+function noEncontrado() {
   console.log(`No se encontro el archivo pedido: ${rutaArchivo}`);
-  res.writeHead(404);
-  res.end("404 La pagina no se encontro.");
+  respuesta.writeHead(404);
+  respuesta.end("404 La pagina no se encontro.");
 }
 
 /**
@@ -88,16 +97,19 @@ function noEncontrado(res) {
  * el contenido que el servidor decida mandar.
  */
 function servirFront(req, res) {
+  respuesta = res;
+  pedido = req;
+
   console.log("PROCESANDO PEDIDO ********************");
   /** @type {Buffer | undefined} */
   let contenido;
   /** @type {string} */
   let tipo = "text/html";
 
-  const urlPedido = new URL(req.url);
-  console.log("El end point es:", pedido.pathname);
+  const urlPedido = new URL(pedido.url);
+  console.log("El end point es:", urlPedido.pathname);
 
-  const formulario = new Formulario(pedido);
+  const formulario = new Formulario();
   contenido = formulario.procesar();
 
   if (!contenido) {
@@ -107,8 +119,6 @@ function servirFront(req, res) {
       noEncontrado(res);
       return;
     }
-
-    tipo = parseTipoContenido();
   }
 
   servir(contenido, tipo, res);
@@ -153,12 +163,10 @@ function parseTipoContenido() {
 
 /**
  * @description una vez que tenemos el contenido pedido e identificamos el tipo MIME completamos la respuesta con esos datos
- * @param {Buffer} contenido
- * @param {string} tipo
- * @param {http.ServerResponse} res
  */
-function servir(contenido, tipo, res) {
-  console.log("Sirviendo un archivo de tipo:", tipo);
-  res.writeHead(200, { "Content-Type": tipo });
-  res.end(contenido, "utf-8");
+function servir() {
+  tipoMIME = parseTipoContenido();
+  console.log("Sirviendo un archivo de tipo:", tipoMIME);
+  respuesta.writeHead(200, { "Content-Type": tipoMIME });
+  respuesta.end(contenido, "utf-8");
 }

@@ -27,7 +27,7 @@ export default class Formulario {
   #procesadores = new Map();
 
   /**
-   * @param {url.UrlWithParsedQuery} pedido Este objeto organiza los distintos datos que contiene un url en propiedades.
+   * @param {URL} pedido Este objeto organiza los distintos datos que contiene un url en propiedades.
    */
   constructor(pedido) {
     this.#pedido = pedido;
