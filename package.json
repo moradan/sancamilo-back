@@ -14,5 +14,8 @@
     "eslint": "^9.4.0",
     "eslint-plugin-jsdoc": "^48.2.9",
     "globals": "^15.4.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
