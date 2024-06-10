@@ -5,8 +5,7 @@ import Formulario from "./src/formulario.js";
 import fs from "fs";
 import http from "http";
 import path from "path";
-import { fileURLToPath } from "url";
-import URL from "url";
+import { fileURLToPath, URL } from "url";
 
 /** @type {string} la ruta de este archivo server.js en el servicio en el que este hospedado. */
 const __filename = fileURLToPath(import.meta.url);
