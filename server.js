@@ -94,7 +94,7 @@ function servirFront(req, res) {
   /** @type {string} */
   let tipo = "text/html";
 
-  const pedido = url.parse(req.url, true);
+  const urlPedido = new URL(req.url);
   console.log("El end point es:", pedido.pathname);
 
   const formulario = new Formulario(pedido);
