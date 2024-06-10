@@ -22,5 +22,5 @@ function procesar(pedido, respuesta) {
   log("Recibimos un pedido", pedido);
   respuesta.setHeader("Status", 200);
   respuesta.setHeader("Content-Type", "text/html");
-  respuesta.sendFile(__dirname + "/index.html") ;
+  respuesta.end(__dirname);
 }
