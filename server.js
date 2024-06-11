@@ -10,8 +10,9 @@ const servidor = express();
 
 const PORT = 3000;
 
-servidor.get("/", procesar);
-servidor.get("/login", login);
+servidor.use(express.static('public'));
+servidor.get("/api", procesar);
+servidor.get("/api/login", login);
 servidor.listen(PORT, inicio);
 
 function inicio() {
