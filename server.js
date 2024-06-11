@@ -11,8 +11,7 @@ const servidor = express();
 const PORT = 3000;
 
 servidor.get("/", apiRoot);
-servidor.get("/api", apiRoot);
-servidor.get("/api/login", login);
+servidor.get("/login", login);
 servidor.listen(PORT, inicio);
 
 function inicio() {
@@ -20,9 +19,7 @@ function inicio() {
 }
 
 /**
- *
- * @param {http.IncomingMessage} pedido
- * @param {http.ServerResponse} respuesta
+ * @type {import("express").RequestHandler} Esta funcion maneja los request de la raiz.
  */
 function apiRoot(pedido, respuesta) {
   log("Recibimos un pedido", pedido);
