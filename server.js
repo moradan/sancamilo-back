@@ -4,11 +4,14 @@ const express = require("express");
 const fs = require("node:fs");
 const path = require("node:path");
 
+const login = require("./src/login");
+
 const servidor = express();
 
 const PORT = 3000;
 
 servidor.get("/", procesar);
+servidor.get("/login", login);
 servidor.listen(PORT, inicio);
 
 function inicio() {
