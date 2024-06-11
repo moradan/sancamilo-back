@@ -11,7 +11,7 @@ const servidor = express();
 const PORT = 3000;
 
 servidor.use(express.static('public'));
-servidor.get("/api", procesar);
+servidor.get("/api", apiRoot);
 servidor.get("/api/login", login);
 servidor.listen(PORT, inicio);
 
@@ -24,7 +24,7 @@ function inicio() {
  * @param {http.IncomingMessage} pedido
  * @param {http.ServerResponse} respuesta
  */
-function procesar(pedido, respuesta) {
+function apiRoot(pedido, respuesta) {
   log("Recibimos un pedido", pedido);
   /** @type {Buffer} */
   const contenido = fs.readFileSync(path.join(__dirname, "/src/index.txt"));
