@@ -10,7 +10,7 @@ const servidor = express();
 
 const PORT = 3000;
 
-servidor.use(express.static('public'));
+servidor.get("/", apiRoot);
 servidor.get("/api", apiRoot);
 servidor.get("/api/login", login);
 servidor.listen(PORT, inicio);
