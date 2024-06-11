@@ -23,9 +23,9 @@ function inicio() {
 function procesar(pedido, respuesta) {
   log("Recibimos un pedido", pedido);
   /** @type {Buffer} */
-  const contenido = fs.readFileSync(path.join(__dirname, "/public/index.html"));
+  const contenido = fs.readFileSync(path.join(__dirname, "/src/index.txt"));
 
   respuesta.setHeader("Status", 200);
-  respuesta.setHeader("Content-Type", "text/html");
+  respuesta.setHeader("Content-Type", "text/plain");
   respuesta.end(contenido);
 }

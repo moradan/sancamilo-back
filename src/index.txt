@@ -1,0 +1,6 @@
+Bienvenido a la API de clinica San Camilo
+
+Puede pedir cualquiera de los siguientes recursos:
+/login
+/registrarse
+/turnos
