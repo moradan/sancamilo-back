@@ -4,21 +4,14 @@ const express = require("express");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const login = require("./src/login");
-const registrarse = require("./src/registrarse");
-const registrarse = require("./src/registrarse");
+const rutas = require("./src/rutas");
 
 const servidor = express();
 
 const PORT = 3000;
 
 servidor.get("/", apiRoot);
-<<<<<<< HEAD
-servidor.use(login);
-=======
-servidor.get("/login", login);
-servidor.get("/registrarse", registrarse);
->>>>>>> 44433dd4f0470cb21ef224428fba6b1330a5ab94
+servidor.use(rutas);
 servidor.listen(PORT, inicio);
 
 function inicio() {
