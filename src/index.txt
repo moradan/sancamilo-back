@@ -1,0 +1,9 @@
+Bienvenido a la API de clinica San Camilo
+
+Puede pedir cualquiera de los siguientes recursos:
+/login: envie nombre de usuario y contrasenia para autenticarse.
+/registrarse: envie los datos personales para registrarse.
+/turnos: seleccione paciente, profesional, fecha y hora para registrar un turno de consulta medica.
+/especialidades: consulta la lista de especialidades.
+/profesionales: consulta la lista de profesionales.
+/prepagas: consulta la lista de prepagas.
