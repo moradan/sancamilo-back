@@ -11,7 +11,7 @@ const servidor = express();
 const PORT = 3000;
 
 servidor.get("/", apiRoot);
-servidor.get("/login", login);
+servidor.use(login);
 servidor.listen(PORT, inicio);
 
 function inicio() {
