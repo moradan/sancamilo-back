@@ -5,6 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const login = require("./src/login");
+const registrarse = require("./src/registrarse");
 
 const servidor = express();
 
