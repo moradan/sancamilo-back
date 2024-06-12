@@ -12,6 +12,7 @@ const PORT = 3000;
 
 servidor.get("/", apiRoot);
 servidor.get("/login", login);
+servidor.get("/registrarse", registrarse);
 servidor.listen(PORT, inicio);
 
 function inicio() {
