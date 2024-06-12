@@ -1,43 +1,8 @@
-/**
- * @typedef {'masculino' | 'femenino'} Sexo 
- */
-
-/**
- * @typedef {object} Usuario
- * @property {int} id
- * @property {string} nombreCompleto
- * @property {Sexo} sexo
- * @property {string} fechaNacimiento
- * @property {string} email
- * @property {int} prepaga
- * @property {int} especialidad
- * @property {string} password
- */
-
-/**
- * @typedef {object} Especialidad
- * @property {int} id
- * @property {string} nombre
- */
-
-/**
- * @typedef {object} Prepaga
- * @property {int} id
- * @property {string} nombre
- */
-
-/**
- * @typedef {object} Turno
- * @property {int} id
- * @property {int} idPaciente
- * @property {int} idProfesional
- * @property {string} fecha
- * @property {string} horario
- */
+const Tipos = require("./tipos_datos");
 
 class Conexion {
   /**
-   * @type {Array<Usuario>}
+   * @type {Array<Tipos.Usuario>}
    */
   #usuarios = [
     {
@@ -52,19 +17,19 @@ class Conexion {
     }
   ];
 
-  /** @type {Array<Prepaga>} */
+  /** @type {Array<Tipos.Prepaga>} */
   #prepagas = [];
 
-  /** @type {Array<Especialidad>} */
+  /** @type {Array<Tipos.Especialidad>} */
   #especialidades = [];
 
-  /** @type {Array<Turno>} */
+  /** @type {Array<Tipos.Turno>} */
   #turnos = [];
 
   /**
    * Busca un usuario en la base de datos por nombre. 
    * @param {string} nombreParaBuscar  El nombre completo del usuario que queremos buscar en la bd.
-   * @returns {Usuario | undefined} El objeto de tipo usuario que esta en la base de datos y coincide con el nombre provisto.
+   * @returns {Tipos.Usuario | undefined} El objeto de tipo usuario que esta en la base de datos y coincide con el nombre provisto.
    * Devuelve undefined si no encuentra un registro con ese nombre.
    */
   usuarioPorNombre(nombreParaBuscar) {
@@ -73,7 +38,7 @@ class Conexion {
 
   /**
    * Agrega un nuevo usuario a la base de datos. 
-   * @param {Usuario} usuarioParaAgregar El objeto usuario que hay que agregar a la base de datos. Por el momento vamos a agregar
+   * @param {Tipos.Usuario} usuarioParaAgregar El objeto usuario que hay que agregar a la base de datos. Por el momento vamos a agregar
    * sin preocuparnos por la creacion o prevencion de duplicados.
    */
   agregarUsuario(usuarioParaAgregar) {
@@ -82,7 +47,7 @@ class Conexion {
 
   /**
    * 
-   * @returns {Array<Turno>} Devuelve un array que contiene todos los turnos de la bs.
+   * @returns {Array<Tipos.Turno>} Devuelve un array que contiene todos los turnos de la bs.
    */
   todosLosTurnos() {
     return this.#turnos;
@@ -90,7 +55,7 @@ class Conexion {
 
   /**
    * 
-   * @param {Turno} turnoParaAgregar El objeto de tipo Turno que debemos agregar.
+   * @param {Tipos.Turno} turnoParaAgregar El objeto de tipo Turno que debemos agregar.
    */
   agregarTurno(turnoParaAgregar) {
     this.#turnos.push(turnoParaAgregar);
