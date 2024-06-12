@@ -14,6 +14,27 @@
  * @property {string} password
  */
 
+/**
+ * @typedef {object} Especialidad
+ * @property {int} id
+ * @property {string} nombre
+ */
+
+/**
+ * @typedef {object} Prepaga
+ * @property {int} id
+ * @property {string} nombre
+ */
+
+/**
+ * @typedef {object} Turno
+ * @property {int} id
+ * @property {int} idPaciente
+ * @property {int} idProfesional
+ * @property {string} fecha
+ * @property {string} horario
+ */
+
 class Conexion {
   /**
    * @type {Array<Usuario>}
@@ -30,6 +51,15 @@ class Conexion {
       password: "password"
     }
   ];
+
+  /** @type {Array<Prepaga>} */
+  #prepagas = [];
+
+  /** @type {Array<Especialidad>} */
+  #especialidades = [];
+
+  /** @type {Array<Turno>} */
+  #turnos = [];
 
   /**
    * Busca un usuario en la base de datos por nombre. 
@@ -49,7 +79,22 @@ class Conexion {
   agregarUsuario(usuarioParaAgregar) {
     this.#usuarios.push(usuarioParaAgregar);
   }
-}
 
+  /**
+   * 
+   * @returns {Array<Turno>} Devuelve un array que contiene todos los turnos de la bs.
+   */
+  todosLosTurnos() {
+    return this.#turnos;
+  }
+
+  /**
+   * 
+   * @param {Turno} turnoParaAgregar El objeto de tipo Turno que debemos agregar.
+   */
+  agregarTurno(turnoParaAgregar) {
+    this.#turnos.push(turnoParaAgregar);
+  }
+}
 
 module.exports = Conexion;
