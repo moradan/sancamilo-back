@@ -5,13 +5,15 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const login = require("./src/login");
+const registrarse = require("./src/registrarse");
 
 const servidor = express();
 
 const PORT = 3000;
 
 servidor.get("/", apiRoot);
-servidor.use(login);
+servidor.get("/login", login);
+servidor.get("/registrarse", registrarse);
 servidor.listen(PORT, inicio);
 
 function inicio() {
