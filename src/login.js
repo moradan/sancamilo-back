@@ -1,3 +1,6 @@
+const Conexion = require("./conexion_datos");
+const conexion = new Conexion;
+
 /** 
  * @type {import("express").RequestHandler}
  */
@@ -12,27 +15,13 @@ function login(pedido, respuesta) {
     return;
   }
 
-  /** @type {string} */
-  const contraseniaEncontrada = buscarEnBaseDeDatos(nombreUsuario);
+  /** @type {Usuario | undefined} */
+  const usuarioBuscado = conexion.usuarioPorNombre(nombreUsuario);
 
-  if (password === contraseniaEncontrada) {
+  if (usuarioBuscado && password === usuarioBuscado.password) {
     respuesta.send("Usuario autentificado.");
   } else {
     respuesta.send("Nombre de usuario o contrasenia invalidos.");
-  }
-}
-
-/**
- * Se comunica con la base de datos, busca el nombre de usuario y de encontrarlo devuelve el password. 
- * @param {string} nombreUsuario 
- * @returns {string} El password que le corresponde al usuario enccocntrado.
- */
-function buscarEnBaseDeDatos(nombreUsuario) {
-  // TODO reemplazar este bloque por un acceso a la base de datos.
-  if (nombreUsuario.toUpperCase() === "RODRIGO") {
-    return "password";
-  } else {
-    return;
   }
 }
 
