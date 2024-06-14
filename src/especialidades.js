@@ -5,7 +5,7 @@ const conexion = new Conexion;
  * @type {import("express").RequestHandler}
  */
 function especialidades(pedido, respuesta) {
-    respuesta.json(conexion.especialidadesTodas());
+    respuesta.status(200).json(conexion.especialidadesTodas());
 }
 
 module.exports = especialidades;

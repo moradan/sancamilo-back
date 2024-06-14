@@ -6,7 +6,7 @@ const conexion = new Conexion;
  */
 function prepagas(pedido, respuesta) {
     const listaPrepagas = conexion.prepagasTodas();
-    respuesta.json(listaPrepagas);
+    respuesta.status(200).json(listaPrepagas);
 }
 
 module.exports = prepagas;

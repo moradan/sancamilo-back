@@ -12,7 +12,7 @@ function login(pedido, respuesta) {
   const password = pedido.query.password;
 
   if (!email || !password) {
-    respuesta.json(fs.readFileSync("./src/loginhelp.txt"));
+    respuesta.status(422).json({ message: "el pedido no incluye todos los campos necesarios" });
     return;
   }
 
@@ -20,9 +20,9 @@ function login(pedido, respuesta) {
   const usuarioBuscado = conexion.usuarioPorEmail(email);
 
   if (usuarioBuscado && password === usuarioBuscado.password) {
-    respuesta.send("Usuario autentificado.");
+    respuesta.status(200).json({ message: "Usuario autentificado." });
   } else {
-    respuesta.send("Nombre de usuario o contrasenia invalidos.");
+    respuesta.status(401).json({ message: "Nombre de usuario o contrasenia invalidos." });
   }
 }
 
