@@ -40,7 +40,12 @@ class Conexion {
   ];
 
   /** @type {Array<Tipos.Especialidad>} */
-  #especialidades = [];
+  #especialidades = [
+    {
+      id: 1,
+      nombre: "Consulta General"
+    }
+  ];
 
   /** @type {Array<Tipos.Turno>} */
   #turnos = [];
@@ -85,6 +90,14 @@ class Conexion {
    */
   prepagasTodas() {
     return this.#prepagas;
+  }
+
+  /**
+   * 
+   * @returns Devuelve la lista de todas las especialidades cargadas.
+   */
+  especialidadesTodas() {
+    return this.#especialidades;
   }
 }
 

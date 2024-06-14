@@ -1,0 +1,11 @@
+const Conexion = require("./conexion_datos");
+const conexion = new Conexion;
+
+/**
+ * @type {import("express").RequestHandler}
+ */
+function especialidades(pedido, respuesta) {
+    respuesta.json(conexion.especialidadesTodas());
+}
+
+module.exports = especialidades;
