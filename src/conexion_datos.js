@@ -61,6 +61,16 @@ class Conexion {
   }
 
   /**
+   * Busca un usuario en la base de datos por nombre. 
+   * @param {string} nombreParaBuscar  El nombre completo del usuario que queremos buscar en la bd.
+   * @returns {Tipos.Usuario | undefined} El objeto de tipo usuario que esta en la base de datos y coincide con el nombre provisto.
+   * Devuelve undefined si no encuentra un registro con ese nombre.
+   */
+  usuarioPorEmail(emailParabuscar) {
+    return this.#usuarios.find((usuario) => usuario.email === emailParabuscar);
+  }
+
+  /**
    * Agrega un nuevo usuario a la base de datos. 
    * @param {Tipos.Usuario} usuarioParaAgregar El objeto usuario que hay que agregar a la base de datos. Por el momento vamos a agregar
    * sin preocuparnos por la creacion o prevencion de duplicados.

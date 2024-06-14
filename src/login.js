@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const Conexion = require("./conexion_datos");
 const conexion = new Conexion;
 
@@ -6,17 +7,17 @@ const conexion = new Conexion;
  */
 function login(pedido, respuesta) {
   /** @type {string | undefined} */
-  const nombreUsuario = pedido.query.nombreUsuario;
+  const email = pedido.query.email;
   /** @type {string | undefined} */
   const password = pedido.query.password;
 
-  if (!nombreUsuario || !password) {
-    respuesta.send("Estas usando mal la API.");
+  if (!email || !password) {
+    respuesta.json(fs.readFileSync("./src/loginhelp.txt"));
     return;
   }
 
   /** @type {Usuario | undefined} */
-  const usuarioBuscado = conexion.usuarioPorNombre(nombreUsuario);
+  const usuarioBuscado = conexion.usuarioPorEmail(email);
 
   if (usuarioBuscado && password === usuarioBuscado.password) {
     respuesta.send("Usuario autentificado.");
