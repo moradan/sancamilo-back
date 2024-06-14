@@ -1,5 +1,3 @@
-const Tipos = require("./tipos_datos");
-
 class Conexion {
   /**
    * @type {Array<Tipos.Usuario>}
@@ -18,7 +16,28 @@ class Conexion {
   ];
 
   /** @type {Array<Tipos.Prepaga>} */
-  #prepagas = [];
+  #prepagas = [
+    {
+      id: 1,
+      nombre: "No",
+    },
+    {
+      id: 2,
+      nombre: "OSDE"
+    },
+    {
+      id: 3,
+      nombre: "Medicus"
+    },
+    {
+      id: 4,
+      nombre: "Omit"
+    },
+    {
+      id: 5,
+      nombre: "Otro"
+    }
+  ];
 
   /** @type {Array<Tipos.Especialidad>} */
   #especialidades = [];
@@ -59,6 +78,13 @@ class Conexion {
    */
   agregarTurno(turnoParaAgregar) {
     this.#turnos.push(turnoParaAgregar);
+  }
+
+  /**
+   * @returns Devuelve la lista de todas las prepagas cargadas. 
+   */
+  prepagasTodas() {
+    return this.#prepagas;
   }
 }
 
