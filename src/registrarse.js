@@ -1,4 +1,5 @@
 const Conexion = require('./conexion_datos');
+const { Usuario } = require('./tipos_datos');
 /** @type {import("./conexion_datos").Conexion} */
 const conexion = new Conexion;
 
@@ -20,7 +21,9 @@ function registrarse(pedido, respuesta) {
         return;
     }
 
-    respuesta.status(501).json({ message: "todavia no te podes registrar" });
+    // Crear el usuario usando el tipo Uruario definido en el archivo tipo_datos.js
+    const usuarioParaAgregar = new Usuario(
+        respuesta.status(501).json({ message: "todavia no te podes registrar" });
 }
 
 module.exports = registrarse;

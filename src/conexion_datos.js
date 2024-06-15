@@ -1,6 +1,13 @@
+/**
+ * @typedef {import("./tipos_datos").Usuario} Usuario
+ * @typedef {import("./tipos_datos").Prepaga} Prepaga
+ * @typedef {import("./tipos_datos").Especialidad} Especialidad
+ * @typedef {import("./tipos_datos").Turno} Turno
+ */
+
 class Conexion {
   /**
-   * @type {Array<Tipos.Usuario>}
+   * @type {Array<Usuario>}
    */
   #usuarios = [
     {
@@ -15,7 +22,7 @@ class Conexion {
     }
   ];
 
-  /** @type {Array<Tipos.Prepaga>} */
+  /** @type {Array<Prepaga>} */
   #prepagas = [
     {
       id: 1,
@@ -39,7 +46,7 @@ class Conexion {
     }
   ];
 
-  /** @type {Array<Tipos.Especialidad>} */
+  /** @type {Array<Especialidad>} */
   #especialidades = [
     {
       id: 1,
@@ -47,7 +54,7 @@ class Conexion {
     }
   ];
 
-  /** @type {Array<Tipos.Turno>} */
+  /** @type {Array<Turno>} */
   #turnos = [];
 
   /**
