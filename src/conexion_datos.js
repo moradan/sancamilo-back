@@ -6,7 +6,7 @@
  */
 
 class Conexion {
-  #autoIncUsuario = 1;
+  #autoIncUsuario = 2;
 
   /**
    * @type {Array<Usuario>}
@@ -21,6 +21,16 @@ class Conexion {
       prepaga: 1,
       especialidad: null,
       password: "password"
+    },
+    {
+      id: 2,
+      nombreCompleto: "Dr. Sanchez",
+      sexo: "masculino",
+      fechaNacimiento: "13-11-1975",
+      email: "drsanchez@sancamilo.com",
+      prepaga: 1,
+      especialidad: 1,
+      password: "doctor"
     }
   ];
 
@@ -98,6 +108,10 @@ class Conexion {
     this.#autoIncUsuario++;
     usuarioParaAgregar.id = this.#autoIncUsuario;
     this.#usuarios.push(usuarioParaAgregar);
+  }
+
+  profesionalesTodos() {
+    return this.#usuarios.filter((usuario) => usuario.especialidad)
   }
 
   /**
