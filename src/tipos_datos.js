@@ -4,13 +4,13 @@
 
 /**
  * @typedef {object} Usuario
- * @property {int} id
+ * @property {number} id
  * @property {string} nombreCompleto
  * @property {Sexo} sexo
  * @property {string} fechaNacimiento
  * @property {string} email
- * @property {int} prepaga
- * @property {int} especialidad
+ * @property {number} prepaga
+ * @property {number} especialidad
  * @property {string} password
  */
 class Usuario {
@@ -23,6 +23,17 @@ class Usuario {
   especialidad;
   password;
 
+  /**
+   * 
+   * @param {string} nombreCompleto 
+   * @param {Sexo} sexo 
+   * @param {string} fechaNacimiento 
+   * @param {string} email 
+   * @param {number} prepaga 
+   * @param {number | undefined} especialidad 
+   * @param {string} password 
+   * @returns 
+   */
   constructor(nombreCompleto, sexo = 'no definido', fechaNacimiento, email, prepaga = 1, especialidad, password) {
     // TODO Validar el formato de la fecha.
     // TODO Validar el formato del email.
