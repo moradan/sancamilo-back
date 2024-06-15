@@ -6,6 +6,8 @@
  */
 
 class Conexion {
+  #autoIncUsuario = 1;
+
   /**
    * @type {Array<Usuario>}
    */
@@ -93,6 +95,8 @@ class Conexion {
    * sin preocuparnos por la creacion o prevencion de duplicados.
    */
   agregarUsuario(usuarioParaAgregar) {
+    this.#autoIncUsuario++;
+    usuarioParaAgregar.id = this.#autoIncUsuario;
     this.#usuarios.push(usuarioParaAgregar);
   }
 

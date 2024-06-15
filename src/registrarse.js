@@ -32,12 +32,13 @@ function registrarse(pedido, respuesta) {
         pedido.query.password
     );
 
-    respuesta.status(501).json(
-        {
-            message: "en un futuro podremos agregar toda esa informacion a la bd",
-            usuario: usuarioParaAgregar
-        }
-    );
+    // Almacenar el usuario utilizando la conexion a base de datos simulada.
+    conexion.agregarUsuario(usuarioParaAgregar);
+
+    respuesta.status(201).json({
+        message: "El siguiente usuario fue agregado con exito.",
+        usuarioAgregado: usuarioParaAgregar
+    })
 }
 
 module.exports = registrarse;
