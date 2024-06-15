@@ -21,9 +21,23 @@ function registrarse(pedido, respuesta) {
         return;
     }
 
-    // Crear el usuario usando el tipo Uruario definido en el archivo tipo_datos.js
+    /** @type {Usuario | undefined} */
     const usuarioParaAgregar = new Usuario(
-        respuesta.status(501).json({ message: "todavia no te podes registrar" });
+        pedido.query.nombreCompleto,
+        pedido.query.sexo,
+        pedido.query.fechaNacimiento,
+        pedido.query.email,
+        pedido.query.prepaga,
+        pedido.query.especialidad,
+        pedido.query.password
+    );
+
+    respuesta.status(501).json(
+        {
+            message: "en un futuro podremos agregar toda esa informacion a la bd",
+            usuario: usuarioParaAgregar
+        }
+    );
 }
 
 module.exports = registrarse;
