@@ -51,6 +51,16 @@ class Conexion {
   #turnos = [];
 
   /**
+   * 
+   * @param {string} email 
+   * @returns {boolean} Devuelve true si exite un usuario con el email provisto. De otro modo, false. 
+   */
+  usuarioExiste(email) {
+    const usuarioBuscado = this.usuarioPorEmail(email);
+    return usuarioBuscado;
+  }
+
+  /**
    * Busca un usuario en la base de datos por nombre. 
    * @param {string} nombreParaBuscar  El nombre completo del usuario que queremos buscar en la bd.
    * @returns {Tipos.Usuario | undefined} El objeto de tipo usuario que esta en la base de datos y coincide con el nombre provisto.
