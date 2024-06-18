@@ -75,7 +75,34 @@ class Usuario {
  * @property {string} horario
 */
 class Turno {
-  //TODO falta implementar la clase Turno
+  id = null;
+  idPaciente;
+  idProfesional;
+  fecha;
+  horario;
+
+  /**
+   * 
+   * @param {int} idPaciente 
+   * @param {int} idProfesional 
+   * @param {date} fecha 
+   * @param {string} horario 
+   * @returns 
+   */
+  constructor(idPaciente, idProfesional, fecha, horario) {
+    // TODO Validar el formato de la fecha.
+    // TODO Validar el formato del email.
+
+    // Validar que idPaciente o idProfesional no sean cadenas vacias.
+    if (idPaciente && idProfesional && fecha && horario) {
+      this.idPaciente = idPaciente;
+      this.idProfesional = idProfesional;
+      this.fecha = fecha;
+      this.horario = horario;
+    } else {
+      return;
+    }
+  }
 }
 
 module.exports = {
