@@ -125,8 +125,8 @@ class Conexion {
   /**
    * 
    *  Busca turnos en una fecha y horario determinado
-   *  @param {Tipos.Turno} horario El horario por el que se desean buscar turnos.
-   *  @param {Tipos.Turno} fecha La fecha por el que se desean buscar turnos.
+   *  @param {string} horario El horario por el que se desean buscar turnos.
+   *  @param {string} fecha La fecha por el que se desean buscar turnos.
 
    *  @returns {Tipos.turno}
    */
