@@ -38,8 +38,8 @@ function nuevoTurno(pedido, respuesta) {
     conexion.agregarTurno(turnoParaAgregar);
 
     respuesta.status(201).json({
-        message: "El siguiente usuario fue agregado con exito.",
-        usuarioAgregado: usuarioParaAgregar
+        message: "El siguiente turno fue agregado con exito.",
+        usuarioAgregado: turnoParaAgregar
     })
 }
 
