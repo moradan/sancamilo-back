@@ -85,7 +85,7 @@ class Turno {
    * 
    * @param {int} idPaciente 
    * @param {int} idProfesional 
-   * @param {date} fecha 
+   * @param {string} fecha 
    * @param {string} horario 
    * @returns 
    */
