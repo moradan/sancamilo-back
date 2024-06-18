@@ -124,6 +124,18 @@ class Conexion {
 
   /**
    * 
+   *  Busca turnos en una fecha y horario determinado
+   *  @param {string} horario El horario por el que se desean buscar turnos.
+   *  @param {string} fecha La fecha por el que se desean buscar turnos.
+
+   *  @returns {Tipos.turno}
+   */
+  buscarTurno(fecha, horario){
+    return this.#turnos.find((turno) => (turno.fecha === fecha && turno.horario === horario) );
+  }
+
+  /**
+   * 
    * @param {Tipos.Turno} turnoParaAgregar El objeto de tipo Turno que debemos agregar.
    */
   agregarTurno(turnoParaAgregar) {
