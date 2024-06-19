@@ -130,8 +130,8 @@ class Conexion {
 
    *  @returns {Tipos.turno}
    */
-  buscarTurno(fecha, horario){
-    return this.#turnos.find((turno) => (turno.fecha === fecha && turno.horario === horario) );
+  buscarTurno(fecha, horario) {
+    return this.#turnos.find((turno) => (turno.fecha === fecha && turno.horario === horario));
   }
 
   /**
