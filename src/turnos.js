@@ -10,8 +10,8 @@ const conexion = new Conexion;
  */
 function nuevoTurno(pedido, respuesta) {
     /** @type {string | undefined} */
-    const idPaciente= pedido.query.idPaciente;
-    const idProfesional= pedido.query.idProfesional;
+    const idPaciente = pedido.query.idPaciente;
+    const idProfesional = pedido.query.idProfesional;
     const fecha = pedido.query.fecha;
     const horario = pedido.query.horario;
 
@@ -39,7 +39,7 @@ function nuevoTurno(pedido, respuesta) {
 
     respuesta.status(201).json({
         message: "El siguiente turno fue agregado con exito.",
-        usuarioAgregado: turnoParaAgregar
+        turnoParaAgregar: turnoParaAgregar
     })
 }
 
