@@ -1,12 +1,12 @@
 const express = require("express");
 const rutas = express.Router();
-const login = require("./login");
-const registrarse = require("./registrarse");
-const prepagas = require("./prepagas");
-const especialidades = require("./especialidades");
-const turnos = require("./turnos");
-const profesionales = require("./profesionales");
-const { usuariosTodos } = require("./controladorUsuarios");
+const login = require("../controladores/login");
+const registrarse = require("../registrarse");
+const prepagas = require("../prepagas");
+const especialidades = require("../especialidades");
+const turnos = require("../turnos");
+const profesionales = require("../profesionales");
+const { usuariosTodos } = require("../controladores/usuarios");
 
 rutas.get("/", apiRoot);
 rutas.get("/login", login);

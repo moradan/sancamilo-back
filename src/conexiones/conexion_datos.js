@@ -1,8 +1,8 @@
 /**
- * @typedef {import("./tipos_datos").Usuario} Usuario
- * @typedef {import("./tipos_datos").Prepaga} Prepaga
- * @typedef {import("./tipos_datos").Especialidad} Especialidad
- * @typedef {import("./tipos_datos").Turno} Turno
+ * @typedef {import("../tipos_datos").Usuario} Usuario
+ * @typedef {import("../tipos_datos").Prepaga} Prepaga
+ * @typedef {import("../tipos_datos").Especialidad} Especialidad
+ * @typedef {import("../tipos_datos").Turno} Turno
  */
 
 class Conexion {
