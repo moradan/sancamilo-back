@@ -1,4 +1,4 @@
-const Conexion = require("./conexion_datos");
+const Conexion = require("./conexiones/conexion_datos");
 const conexion = new Conexion;
 
 /** 

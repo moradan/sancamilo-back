@@ -1,4 +1,4 @@
-const Conexion = require('./conexion_datos');
+const Conexion = require('./conexiones/conexion_datos');
 const { Usuario } = require('./tipos_datos');
 /** @type {import("./conexion_datos").Conexion} */
 const conexion = new Conexion;

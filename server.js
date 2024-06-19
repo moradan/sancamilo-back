@@ -1,7 +1,7 @@
 const { log } = require("console");
 const express = require("express");
 
-const rutas = require("./src/rutas");
+const rutas = require("./src/rutas/rutas");
 
 const servidor = express();
 
