@@ -14,6 +14,7 @@ function usuariosTodos(pedido, respuesta) {
             return;
         }
 
+        console.log("Enviamos la lista de usuarios.");
         respuesta.status(200).json(resultado);
         return;
     })
