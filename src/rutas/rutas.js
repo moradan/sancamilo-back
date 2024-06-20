@@ -5,7 +5,7 @@ const registrarse = require("../registrarse");
 const prepagas = require("../prepagas");
 const especialidades = require("../especialidades");
 const turnos = require("../turnos");
-const profesionales = require("../profesionales");
+const profesionales = require("../controladores/profesionales");
 const { usuariosTodos } = require("../controladores/usuarios");
 
 rutas.get("/", apiRoot);
