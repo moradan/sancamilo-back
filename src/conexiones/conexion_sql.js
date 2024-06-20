@@ -17,7 +17,7 @@ function callback(error) {
         return;
     }
 
-    console.log("conectado a bs");
+    console.log("conectado a always data");
 }
 
 module.exports = conexion_sql;
