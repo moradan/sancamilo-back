@@ -1,0 +1,2 @@
+
+rutas.get("/turnos", turnos);

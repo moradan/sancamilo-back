@@ -1,0 +1,2 @@
+
+rutas.get("/especialidades", especialidades);
