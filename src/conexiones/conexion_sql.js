@@ -17,7 +17,7 @@ function callback(error) {
         return;
     }
 
-    console.log("conectado a always data");
+    console.log("conectado a alwaysdata");
 }
 
 module.exports = conexion_sql;
