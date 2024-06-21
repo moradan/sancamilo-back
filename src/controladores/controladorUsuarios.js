@@ -24,10 +24,7 @@ function todos(pedido, respuesta) {
  * @type {import("express").RequestHandler}
  */
 function login(pedido, respuesta) {
-    /** @type {string | undefined} */
-    const email = pedido.query.email;
-    /** @type {string | undefined} */
-    const password = pedido.query.password;
+    const { email, password } = pedido.params;
 
     if (!email || !password) {
         respuesta.status(400).json({ message: "el pedido no incluye todos los campos necesarios" });
@@ -40,13 +37,13 @@ function login(pedido, respuesta) {
     conexion.query(comandoSql, [email], (error, resultado) => {
         if (error) {
             console.log(error);
-            respuesta.status(500).json({ mensaje: "no se pudo completar la busqueda." });
+            respuesta.status(500).json({ mensaje: "No se pudo completar la busqueda." });
             return;
         }
 
         if (resultado.length > 1) {
             console.log(resultado);
-            respuesta.status(500).json({ mensaje: "hay varios registros con el mismo email y solo deberia haber 1." });
+            respuesta.status(500).json({ mensaje: "Hay varios registros con el mismo email y solo deberia haber 1." });
             return;
         }
 
@@ -93,7 +90,7 @@ function registrarse(pedido, respuesta) {
         return;
     }
 
-    if (conexion.usuarioExiste(email)) {
+    if (usuarioExiste(email)) {
         respuesta.status(409).json({ message: "Ya existe un usuario con esa direccion de email." });
         return;
     }
@@ -116,6 +113,17 @@ function registrarse(pedido, respuesta) {
         message: "El siguiente usuario fue agregado con exito.",
         usuarioAgregado: usuarioParaAgregar
     })
+}
+
+/**
+ * 
+ * @param {string} email 
+ * @returns {boolean} true si ya existe un registro en base de datos con el email; de otro modo false.
+ */
+function usuarioExiste(email) {
+    const comandoSql = "SELECT * FROM usuarios WHERE email = ?";
+
+    conexion.query(comandoSql);
 }
 
 module.exports = {
