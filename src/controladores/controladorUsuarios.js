@@ -83,47 +83,32 @@ function profesionales(pedido, respuesta) {
  * @type {import("express").RequestHandler}
  */
 function registrarse(pedido, respuesta) {
-    /** @type {string | undefined} */
-    const email = pedido.query.email;
-    if (!email) {
-        respuesta.status(400).json({ message: "el pedido no está bien formulado" })
-        return;
-    }
+    const {
+        nombreCompleto,
+        sexo,
+        fechaNacimiento,
+        email,
+        prepaga,
+        especialidad,
+        password } = pedido.body;
 
-    if (usuarioExiste(email)) {
-        respuesta.status(409).json({ message: "Ya existe un usuario con esa direccion de email." });
-        return;
-    }
-
-    /** @type {Usuario | undefined} */
-    const usuarioParaAgregar = new Usuario(
-        pedido.query.nombreCompleto,
-        pedido.query.sexo,
-        pedido.query.fechaNacimiento,
-        pedido.query.email,
-        pedido.query.prepaga,
-        pedido.query.especialidad,
-        pedido.query.password
-    );
-
-    // Almacenar el usuario utilizando la conexion a base de datos simulada.
-    conexion.agregarUsuario(usuarioParaAgregar);
+    const comandoSql = 'INSERT INTO usuarios (nombre_completo, sexo, fecha_nacimiento, email, prepaga, especialidad, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    conextion.query(comandoSql, [
+        nombreCompleto,
+        sexo,
+        fechaNacimiento,
+        email,
+        prepaga,
+        especialidad,
+        password,
+    ]);
 
     respuesta.status(201).json({
         message: "El siguiente usuario fue agregado con exito.",
         usuarioAgregado: usuarioParaAgregar
+    }, (error, resultado) => {
+        //TODO menejare error y envia respuesta.
     })
-}
-
-/**
- * 
- * @param {string} email 
- * @returns {boolean} true si ya existe un registro en base de datos con el email; de otro modo false.
- */
-function usuarioExiste(email) {
-    const comandoSql = "SELECT * FROM usuarios WHERE email = ?";
-
-    conexion.query(comandoSql);
 }
 
 module.exports = {
