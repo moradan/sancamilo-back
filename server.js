@@ -7,6 +7,7 @@ const servidor = express();
 
 const PORT = 3000;
 
+servidor.use(express.json());
 servidor.get('/', (req, res) => { res.status(200).json({ mensaje: "Api de SanCamilo" }) });
 servidor.use('/usuarios', rutasUsuarios);
 servidor.use('/especialidades', rutasEspecialidades);

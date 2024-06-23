@@ -77,12 +77,10 @@ function profesionales(pedido, respuesta) {
     })
 }
 
-/**
- * Este modulo atiende los pedidos de la API para registrar un usuario. Debe comprobar que el usuario no sea duplicado y agregarlo a la base de datos
- * luego devolver un json con un mensaje de confirmacion y estado 201 Created. De ser un usuario duplicado debe contestar con 409 Resource Conflict.
- * @type {import("express").RequestHandler}
- */
-function registrarse(pedido, respuesta) {
+/** @type {import("express").RequestHandler} */
+const registrarse = (pedido, respuesta) => {
+    console.log("Procesando el pedido de registrar un usuario");
+
     const {
         nombreCompleto,
         sexo,
@@ -92,8 +90,11 @@ function registrarse(pedido, respuesta) {
         especialidad,
         password } = pedido.body;
 
-    const comandoSql = 'INSERT INTO usuarios (nombre_completo, sexo, fecha_nacimiento, email, prepaga, especialidad, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    conextion.query(comandoSql, [
+    const comandoSql = 'INSERT INTO usuarios ' +
+        '(nombre_completo, sexo, fecha_nacimiento, email, prepaga, especialidad, password) ' +
+        'VALUES (?, ?, ?, ?, ?, ?, ?)';
+
+    conexion.query(comandoSql, [
         nombreCompleto,
         sexo,
         fechaNacimiento,
@@ -101,14 +102,18 @@ function registrarse(pedido, respuesta) {
         prepaga,
         especialidad,
         password,
-    ]);
-
-    respuesta.status(201).json({
-        message: "El siguiente usuario fue agregado con exito.",
-        usuarioAgregado: usuarioParaAgregar
-    }, (error, resultado) => {
-        //TODO menejare error y envia respuesta.
-    })
+    ], (error, resultado) => {
+        if (error) {
+            console.log("No se pudo agregar ese usuario a la base de datos.");
+            console.error(error);
+        } else {
+            console.log("Se agrego un usuario a la base de datos", resultado);
+            respuesta.status(201).json({
+                mensaje: "El usuario fue creado con exito",
+                usuarioAgregado: resultado
+            });
+        }
+    });
 }
 
 module.exports = {
