@@ -1,3 +1,4 @@
+//TODO adaptar este codigo para usar conexion_sql
 const Conexion = require("../conexiones/conexion_datos");
 const conexion = new Conexion;
 
