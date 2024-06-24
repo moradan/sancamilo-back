@@ -78,7 +78,7 @@ function profesionales(pedido, respuesta) {
 }
 
 /** @type {import("express").RequestHandler} */
-const registrarse = (pedido, respuesta) => {
+function registrarse(pedido, respuesta) {
     console.log("Procesando el pedido de registrar un usuario");
 
     const {
@@ -116,9 +116,58 @@ const registrarse = (pedido, respuesta) => {
     });
 }
 
+/** @type {import("express").RequestHandler} */
+function filtrarDuplicados(pedido, respuesta, proximo) {
+    const comandoSql = "SELECT * FROM usuarios WHERE email = ?";
+    const { email } = pedido.body;
+
+    conexion.query(comandoSql, email, (error, resultado) => {
+        if (error) {
+            console.log("No se pudo consultar la base de datos");
+            console.error(error);
+            respuesta.status(500).send("No pudimos consultar nuestra base de datos. Intente mas tarde.");
+            return;
+        } else {
+            console.log("Comprobando que no exista ya un usuario con este email.");
+            if (resultado.length > 0) {
+                console.log("Ya existe un usuario con ese email.");
+                respuesta.status(409).json({ mensaje: "Ya existe un usuario con ese email." });
+                return;
+            } else {
+                proximo();
+            }
+        }
+    });
+}
+
+/** @type {import("express").RequestHandler} */
+function borrarUsuario(pedido, respuesta) {
+    const { id } = pedido.params;
+
+    if (!id) {
+        console.log("No se especifico un usuario para borrar.");
+        respuesta.status(400).json({ mensaje: "No especifico un identificador de usuario para borrar." });
+        return;
+    } else {
+        const comandoSql = "DELETE FROM usuarios WHERE id = ?";
+        conexion.query(comandoSql, [id], (error, resultado) => {
+            if (error) {
+                console.log("No pudimos borrar el registro.");
+                console.error(error);
+                respuesta.status(500).json({ mensaje: "No pudimos borrar el registro. Intente mas tarde." });
+            } else {
+                console.log("Se borro el registro con exito");
+                respuesta.status(200).json({ mensaje: "El usuario fue borrado con exito.", resultado: resultado });
+            }
+        })
+    }
+}
+
 module.exports = {
     todos,
     login,
     profesionales,
     registrarse,
+    filtrarDuplicados,
+    borrarUsuario,
 }
