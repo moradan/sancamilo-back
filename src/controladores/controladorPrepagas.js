@@ -1,13 +1,23 @@
-//TODO adaptar este codigo para usar conexion_sql
-const Conexion = require("../conexiones/conexion_datos");
-const conexion = new Conexion;
+const conexion = require("../conexiones/conexion_sql");
 
 /** 
  * @type {import("express").RequestHandler}
  */
 function prepagas(pedido, respuesta) {
-    const listaPrepagas = conexion.prepagasTodas();
-    respuesta.status(200).json(listaPrepagas);
+    const comandoSql = "SELECT * FROM prepagas";
+
+    conexion.query(comandoSql, (error, resultados) => {
+        if (error) {
+            console.log("No se pudo consultar la base de datos");
+            console.error(error);
+            respuesta.status(500).send("No se pudo consultar la base de datos");
+            return;
+        } else {
+            console.log("Enviando la lista de prepagas");
+            respuesta.status(200).json({ mensaje: "Lista de prepagas", lista: resultados });
+            return;
+        }
+    });
 }
 
 module.exports = prepagas;
