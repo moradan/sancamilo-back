@@ -13,6 +13,7 @@ function callback(error) {
     console.log("Intentando conectarse a alwaysdata.");
 
     if (error) {
+        console.log("No pudimos conectarnos con alwaysdata");
         console.error(error);
         return;
     }
