@@ -161,34 +161,67 @@ function borrarUsuario(pedido, respuesta) {
 function modificarUsuario(pedido, respuesta) {
     const { id } = pedido.params;
 
-    if (!id) {
+    if (!id || !parseInt(id)) {
         console.log("No se eligio un id valido de usuario para modificar.");
-        respuesta.status(400).json({ mensaje: "No se especifico un id de usuario para modivficar" });
+        respuesta.status(400).json({ mensaje: "No se especifico un id de usuario valido para modificar." });
         return;
     }
 
-    const {
-        nombre_completo,
-        sexo,
-        fecha_nacimiento,
-        email,
-        prepaga,
-        especialidad,
-        password
-    } = pedido.body;
+    let comandoSql = "UPDATE usuarios SET ";
+    const usuario = pedido.body;
+    const valores = [];
+    for (const propiedad in usuario) {
+        // TODO este switch deberia refactorizarse para automatizar la generacion del query.
+        switch (propiedad) {
+            case "nombre_completo":
+                comandoSql = comandoSql.concat("nombre_completo = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            case "sexo":
+                comandoSql = comandoSql.concat("sexo = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            case "fecha_nacimiento":
+                comandoSql = comandoSql.concat("fecha_nacimieento = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            case "prepaga":
+                comandoSql = comandoSql.concat("prepaga = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            case "especialidad":
+                comandoSql = comandoSql.concat("especialidad = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            case "email":
+                comandoSql = comandoSql.concat("email = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            case "password":
+                comandoSql = comandoSql.concat("password = ?, ");
+                valores.push(usuario[propiedad]);
+                break;
+            default:
+                break;
+        }
+    }
+    valores.push(id);
+    if (comandoSql.slice(-4) == "SET ") {
+        console.log("No especifico ningun campo para actualizar.");
+        respuesta.status(400).json({ mensaje: "No especifico ningun campo para actualizar." });
+        return;
+    }
 
-    const comandoSql = "UPDATE usuarios SET nombre_completo = ?, sexo = ?, fecha_nacimiento = ?, email = ?, prepaga = ?, especialidad = ?, password = ? WHERE id = ?";
+    if (comandoSql.slice(-2) == ", ") {
+        comandoSql = comandoSql.slice(0, -2).concat(" WHERE id = ?;");
+    } else {
+        console.log("Error inesperado. Esto no deberia ocurrir.");
+        respuesta.status(500).json({ mensaje: "Hubo un error inesperado en nuestro server. Intente mas tarde." });
+    }
+    console.log(comandoSql);
+    console.log(valores);
 
-    conexion.query(comandoSql, [
-        nombre_completo,
-        sexo,
-        fecha_nacimiento,
-        email,
-        prepaga,
-        especialidad,
-        password,
-        id
-    ], (error, resultados) => {
+    console.log(conexion.query(comandoSql, valores, (error, resultados) => {
         if (error) {
             console.log("Hubo un error ejecutando la consulta.");
             console.error(error);
@@ -199,7 +232,7 @@ function modificarUsuario(pedido, respuesta) {
             respuesta.status(200).json(resultados);
             return;
         }
-    });
+    }).sql);
 }
 
 module.exports = {
