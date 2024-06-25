@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const rutasUsuarios = require("./src/rutas/rutasUsuarios");
 const rutasEspecialidades = require("./src/rutas/rutasEspecialidades");
@@ -10,6 +11,7 @@ const servidor = express();
 const PORT = 3000;
 
 servidor.use(express.json());
+servidor.use(cors());
 
 servidor.get('/', rutaRaiz);
 servidor.use('/usuarios', rutasUsuarios);
