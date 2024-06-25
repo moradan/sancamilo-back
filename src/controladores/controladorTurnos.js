@@ -65,7 +65,7 @@ const nuevoTurno = (pedido, respuesta) => {
             if (error) {
                 console.log("No se pudo generar turno");
                 console.error(error);
-                return respuesta.status(500).json({ mensaje: "No pudimos borrar el registro. Intente mas tarde." });
+                return respuesta.status(500).json({ mensaje: "No pudimos generar el turno. Intente mas tarde." });
             }
             console.log("El turno fue generado correctamente", resultado);
             return respuesta.status(201).json({
