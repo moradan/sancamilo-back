@@ -3,6 +3,8 @@ const express = require("express");
 const rutasUsuarios = require("./src/rutas/rutasUsuarios");
 const rutasEspecialidades = require("./src/rutas/rutasEspecialidades");
 const rutasPrepagas = require("./src/rutas/rutasPrepagas");
+const rutasTurnos = require("./src/rutas/rutasTurnos");
+
 const servidor = express();
 
 const PORT = 3000;
@@ -13,6 +15,8 @@ servidor.get('/', rutaRaiz);
 servidor.use('/usuarios', rutasUsuarios);
 servidor.use('/especialidades', rutasEspecialidades);
 servidor.use('/prepagas', rutasPrepagas);
+servidor.use('/turnos', rutasTurnos);
+
 servidor.listen(PORT, inicio);
 
 function inicio() {
