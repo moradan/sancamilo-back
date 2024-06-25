@@ -1,13 +1,17 @@
 const mysql = require("mysql2");
 
-const conexion_sql = mysql.createConnection({
+const conexion_sql = mysql.createPool({
     host: 'mysql-moradandb.alwaysdata.net',
     user: 'moradandb',
     password: 'cac2024',
-    database: 'moradandb_sancamilo'
+    database: 'moradandb_sancamilo',
+    waitForConnections: true,
+    connectionLimit: 10,
+    maxIdle: 3,
+    idleTimeout: 60000,
 });
 
-conexion_sql.connect(callback);
+// conexion_sql.connect(callback);
 
 function callback(error) {
     console.log("Intentando conectarse a alwaysdata.");
