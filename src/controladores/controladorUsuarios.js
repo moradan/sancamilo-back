@@ -1,8 +1,6 @@
 const conexion = require('../conexiones/conexion_sql');
 
-/**
- * @type {import("express").RequestHandler}
- */
+/** @type {import("express").RequestHandler} */
 function todos(pedido, respuesta) {
     console.log("Consultando todos los usuarios en alwaysdata...");
     const comandoSql = 'SELECT * FROM usuarios';
@@ -20,9 +18,7 @@ function todos(pedido, respuesta) {
     })
 }
 
-/** 
- * @type {import("express").RequestHandler}
- */
+/** @type {import("express").RequestHandler} */
 function login(pedido, respuesta) {
     const { email, password } = pedido.params;
 
@@ -57,9 +53,7 @@ function login(pedido, respuesta) {
     });
 }
 
-/**
- * @type {import("express").RequestHandler}
- */
+/** @type {import("express").RequestHandler} */
 function profesionales(pedido, respuesta) {
     const comandoSql = "SELECT * FROM usuarios WHERE especialidad IS NOT NULL";
 
@@ -82,9 +76,9 @@ function registrarse(pedido, respuesta) {
     console.log("Procesando el pedido de registrar un usuario");
 
     const {
-        nombreCompleto,
+        nombre_completo,
         sexo,
-        fechaNacimiento,
+        fecha_nacimiento,
         email,
         prepaga,
         especialidad,
@@ -95,9 +89,9 @@ function registrarse(pedido, respuesta) {
         'VALUES (?, ?, ?, ?, ?, ?, ?)';
 
     conexion.query(comandoSql, [
-        nombreCompleto,
+        nombre_completo,
         sexo,
-        fechaNacimiento,
+        fecha_nacimiento,
         email,
         prepaga,
         especialidad,
@@ -163,6 +157,51 @@ function borrarUsuario(pedido, respuesta) {
     }
 }
 
+/** @type {import("express").RequestHandler} */
+function modificarUsuario(pedido, respuesta) {
+    const { id } = pedido.params;
+
+    if (!id) {
+        console.log("No se eligio un id valido de usuario para modificar.");
+        respuesta.status(400).json({ mensaje: "No se especifico un id de usuario para modivficar" });
+        return;
+    }
+
+    const {
+        nombre_completo,
+        sexo,
+        fecha_nacimiento,
+        email,
+        prepaga,
+        especialidad,
+        password
+    } = pedido.body;
+
+    const comandoSql = "UPDATE usuarios SET nombre_completo = ?, sexo = ?, fecha_nacimiento = ?, email = ?, prepaga = ?, especialidad = ?, password = ? WHERE id = ?";
+
+    conexion.query(comandoSql, [
+        nombre_completo,
+        sexo,
+        fecha_nacimiento,
+        email,
+        prepaga,
+        especialidad,
+        password,
+        id
+    ], (error, resultados) => {
+        if (error) {
+            console.log("Hubo un error ejecutando la consulta.");
+            console.error(error);
+            respuesta.status(500).json({ mensaje: "No pudimos hacer la modificaion. Intente mas tarde." });
+            return;
+        } else {
+            console.log("Usuario actualizado.");
+            respuesta.status(200).json(resultados);
+            return;
+        }
+    });
+}
+
 module.exports = {
     todos,
     login,
@@ -170,4 +209,5 @@ module.exports = {
     registrarse,
     filtrarDuplicados,
     borrarUsuario,
+    modificarUsuario,
 }
