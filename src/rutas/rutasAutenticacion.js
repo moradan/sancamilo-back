@@ -2,7 +2,7 @@ const express = require("express");
 const rutas = express.Router();
 const middlewareAutenticacion = require("../middleware/middlewareAutenticacion");
 
-rutas.get("/", middlewareAutenticacion, confirmado);
+rutas.get("/", middlewareAutenticacion);
 
 /** @type {import("express").RequestHandler} */
 function confirmado(pedido, respuesta) {

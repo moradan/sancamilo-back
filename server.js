@@ -5,7 +5,7 @@ const rutasUsuarios = require("./src/rutas/rutasUsuarios");
 const rutasEspecialidades = require("./src/rutas/rutasEspecialidades");
 const rutasPrepagas = require("./src/rutas/rutasPrepagas");
 const rutasTurnos = require("./src/rutas/rutasTurnos");
-const rutasAutenticacion = require("./src/rutas/rutaAutenticacion");
+const rutasAutenticacion = require("./src/rutas/rutasAutenticacion");
 const servidor = express();
 
 const PORT = 3000;
