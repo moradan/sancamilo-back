@@ -1,28 +1,18 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
-const conexion_sql = mysql.createPool({
-    host: 'mysql-moradandb.alwaysdata.net',
-    user: 'moradandb',
-    password: 'cac2024',
-    database: 'moradandb_sancamilo',
+const poolConfig = {
+    host: process.env.HOST,
+    user: process.env.USUARIO,
+    password: process.env.PASSWORD,
+    database: process.env.BD,
     waitForConnections: true,
     connectionLimit: 10,
     maxIdle: 3,
     idleTimeout: 60000,
-});
-
-// conexion_sql.connect(callback);
-
-function callback(error) {
-    console.log("Intentando conectarse a alwaysdata.");
-
-    if (error) {
-        console.log("No pudimos conectarnos con alwaysdata");
-        console.error(error);
-        return;
-    }
-
-    console.log("conectado a alwaysdata");
 }
+
+console.log("Creando pool de conexiones con alwaysdata");
+const conexion_sql = mysql.createPool(poolConfig);
 
 module.exports = conexion_sql;
