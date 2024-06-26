@@ -20,41 +20,6 @@ function todos(pedido, respuesta) {
 }
 
 /** @type {import("express").RequestHandler} */
-function login(pedido, respuesta) {
-    const { email, password } = pedido.params;
-
-    if (!email || !password) {
-        respuesta.status(400).json({ message: "el pedido no incluye todos los campos necesarios" });
-        return;
-    }
-
-    /** @type {string} */
-    const comandoSql = "SELECT * FROM usuarios WHERE email = ?";
-
-    conexion.query(comandoSql, [email], (error, resultado) => {
-        if (error) {
-            console.log(error);
-            respuesta.status(500).json({ mensaje: "No se pudo completar la busqueda." });
-            return;
-        }
-
-        if (resultado.length > 1) {
-            console.log(resultado);
-            respuesta.status(500).json({ mensaje: "Hay varios registros con el mismo email y solo deberia haber 1." });
-            return;
-        }
-
-        const usuarioBuscado = resultado[0];
-        if (usuarioBuscado && password === usuarioBuscado.password) {
-            respuesta.status(200).json({ message: "Usuario autentificado." });
-        } else {
-            respuesta.status(401).json({ message: "Nombre de usuario o contrasenia invalidos." });
-        }
-        return;
-    });
-}
-
-/** @type {import("express").RequestHandler} */
 function profesionales(pedido, respuesta) {
     const comandoSql = "SELECT * FROM usuarios WHERE especialidad IS NOT NULL";
 
@@ -247,7 +212,6 @@ function modificarUsuario(pedido, respuesta) {
 
 module.exports = {
     todos,
-    login,
     profesionales,
     registrarse,
     filtrarDuplicados,
