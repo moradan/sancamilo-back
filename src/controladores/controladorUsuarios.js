@@ -1,4 +1,5 @@
 const conexion = require('../conexiones/conexion_sql');
+const bcrypt = require('bcryptjs');
 
 /** @type {import("express").RequestHandler} */
 function todos(pedido, respuesta) {
@@ -84,6 +85,14 @@ function registrarse(pedido, respuesta) {
         especialidad,
         password } = pedido.body;
 
+    if (!nombre_completo || !sexo || !fecha_nacimiento || !email || !prepaga || !password) {
+        console.log("Alguno de los datos no fue provisto");
+        console.log(nombre_completo, sexo, fecha_nacimiento, email, prepaga, password);
+        respuesta.status(400).json({ mensaje: "faltan datos." });
+        return;
+    }
+    const hashedPassword = bcrypt.hashSync(password, 10);
+
     const comandoSql = 'INSERT INTO usuarios ' +
         '(nombre_completo, sexo, fecha_nacimiento, email, prepaga, especialidad, password) ' +
         'VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -95,7 +104,7 @@ function registrarse(pedido, respuesta) {
         email,
         prepaga,
         especialidad,
-        password,
+        hashedPassword,
     ], (error, resultado) => {
         if (error) {
             console.log("No se pudo agregar ese usuario a la base de datos.");
@@ -199,7 +208,8 @@ function modificarUsuario(pedido, respuesta) {
                 break;
             case "password":
                 comandoSql = comandoSql.concat("password = ?, ");
-                valores.push(usuario[propiedad]);
+                const hashedPassword = bcrypt.hashSync(usuario[propiedad], 10);
+                valores.push(hashedPassword);
                 break;
             default:
                 break;
@@ -221,7 +231,7 @@ function modificarUsuario(pedido, respuesta) {
     console.log(comandoSql);
     console.log(valores);
 
-    console.log(conexion.query(comandoSql, valores, (error, resultados) => {
+    conexion.query(comandoSql, valores, (error, resultados) => {
         if (error) {
             console.log("Hubo un error ejecutando la consulta.");
             console.error(error);
@@ -232,7 +242,7 @@ function modificarUsuario(pedido, respuesta) {
             respuesta.status(200).json(resultados);
             return;
         }
-    }).sql);
+    });
 }
 
 module.exports = {
