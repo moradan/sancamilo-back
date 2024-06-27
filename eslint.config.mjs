@@ -20,5 +20,10 @@ export default [
       "no-unused-vars": "warn",
       "no-unused-private-class-members": "warn"
     }
+  },
+  {
+    "env": {
+      "node": true
+    }
   }
 ];
