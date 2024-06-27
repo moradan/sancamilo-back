@@ -219,7 +219,7 @@ function modificarUsuario(pedido, respuesta) {
 }
 
 /** @type {import("express").RequestHandler} */
-function autenticar(pedido, respuesta) {
+function login(pedido, respuesta) {
     const { email, password } = pedido.body;
 
     if (!email || !password) {
@@ -260,5 +260,5 @@ module.exports = {
     filtrarDuplicados,
     borrarUsuario,
     modificarUsuario,
-    autenticar,
+    login,
 }
