@@ -72,15 +72,15 @@ function registrarse(pedido, respuesta) {
         especialidad,
         hashedPassword,
     ], (error, resultado) => {
-        if (error) {
+        if (error || resultado.insertId == 0) {
             console.log("No se pudo agregar ese usuario a la base de datos.");
             console.error(error);
+            respuesta.status(500).json({ mensaje: "No pudimos registrar el usuario. Por favor intente mas tarde." });
+            return;
         } else {
             console.log("Se agrego un usuario a la base de datos", resultado);
-            respuesta.status(201).json({
-                mensaje: "El usuario fue creado con exito",
-                usuarioAgregado: resultado
-            });
+            const token = jwt.sign({ id: resultado.insertId }, process.env.CLAVE_SECRETA, { expiresIn: process.env.VENCIMIENTO_TOKEN });
+            respuesta.status(200).json({ autenticado: true, token });
         }
     });
 }
@@ -219,7 +219,7 @@ function modificarUsuario(pedido, respuesta) {
 }
 
 /** @type {import("express").RequestHandler} */
-function autenticar(pedido, respuesta, proximo) {
+function autenticar(pedido, respuesta) {
     const { email, password } = pedido.body;
 
     if (!email || !password) {
@@ -245,7 +245,7 @@ function autenticar(pedido, respuesta, proximo) {
         const usuarioBuscado = resultado[0];
         if (usuarioBuscado && bcrypt.compareSync(password, usuarioBuscado.password)) {
             const token = jwt.sign({ id: usuarioBuscado.id }, process.env.CLAVE_SECRETA, { expiresIn: process.env.VENCIMIENTO_TOKEN });
-            respuesta.status(200).json({ auth: true, token });
+            respuesta.status(200).json({ autenticado: true, token });
         } else {
             respuesta.status(401).json({ message: "Nombre de usuario o contrasenia invalidos." });
         }
