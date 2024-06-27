@@ -1,4 +1,5 @@
 const conexion = require('../conexiones/conexion_sql');
+const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 
 /** @type {import("express").RequestHandler} */
@@ -147,35 +148,42 @@ function modificarUsuario(pedido, respuesta) {
     for (const propiedad in usuario) {
         // TODO este switch deberia refactorizarse para automatizar la generacion del query.
         switch (propiedad) {
-            case "nombre_completo":
+            case "nombre_completo": {
                 comandoSql = comandoSql.concat("nombre_completo = ?, ");
                 valores.push(usuario[propiedad]);
                 break;
-            case "sexo":
+            }
+            case "sexo": {
                 comandoSql = comandoSql.concat("sexo = ?, ");
                 valores.push(usuario[propiedad]);
                 break;
-            case "fecha_nacimiento":
+            }
+            case "fecha_nacimiento": {
                 comandoSql = comandoSql.concat("fecha_nacimieento = ?, ");
                 valores.push(usuario[propiedad]);
                 break;
-            case "prepaga":
+            }
+            case "prepaga": {
                 comandoSql = comandoSql.concat("prepaga = ?, ");
                 valores.push(usuario[propiedad]);
                 break;
-            case "especialidad":
+            }
+            case "especialidad": {
                 comandoSql = comandoSql.concat("especialidad = ?, ");
                 valores.push(usuario[propiedad]);
                 break;
-            case "email":
+            }
+            case "email": {
                 comandoSql = comandoSql.concat("email = ?, ");
                 valores.push(usuario[propiedad]);
                 break;
-            case "password":
+            }
+            case "password": {
                 comandoSql = comandoSql.concat("password = ?, ");
                 const hashedPassword = bcrypt.hashSync(usuario[propiedad], 10);
                 valores.push(hashedPassword);
                 break;
+            }
             default:
                 break;
         }
