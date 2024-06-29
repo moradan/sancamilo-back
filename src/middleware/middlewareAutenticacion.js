@@ -6,7 +6,7 @@ function autenticar(pedido, respuesta, proximo) {
     const encabezadoAutorizacion = pedido.headers["authorization"];
     if (!encabezadoAutorizacion) {
         console.log("Se intento acceder a contenido protegido sin proveer un token.");
-        respuesta.status(401).json({ autenticado: false, mensaje: "Este pedido requiere un token y no enviaste un token." });
+        respuesta.status(401).json({ autenticado: false, mensaje: "Este pedido requiere un token y no enviaste un token. Hace un pedido GET a usuarios/login con un email y password en JSON para obtener tu token." });
         return;
     }
 

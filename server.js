@@ -1,3 +1,4 @@
+// @ts-check
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -9,8 +10,6 @@ const rutasTurnos = require("./src/rutas/rutasTurnos");
 
 const servidor = express();
 
-const PORT = 5000;
-
 servidor.use(express.json());
 servidor.use(cors());
 
@@ -19,10 +18,17 @@ servidor.use('/usuarios', rutasUsuarios);
 servidor.use('/especialidades', rutasEspecialidades);
 servidor.use('/prepagas', rutasPrepagas);
 servidor.use('/turnos', rutasTurnos);
-servidor.listen(PORT, inicio);
+servidor.listen(process.env.PORT, inicio);
+servidor.on("error", (evento) => {
+	console.error(evento);
+	if(confirm("Hubo un error. Reiniciamos?")) {
+		console.log("Reiniciando...");
+		servidor.listen(process.env.PORT, inicio);
+	}
+});
 
 function inicio() {
-  console.log(`Escuchando en puerto: ${PORT}`);
+  console.log(`Escuchando en puerto: ${process.env.PORT}`);
 }
 
 /**
