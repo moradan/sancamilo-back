@@ -19,7 +19,10 @@ function autenticar(pedido, respuesta, proximo) {
 						pedido.usuario = contenido.id;
             proximo();
         } catch (error) {
+						console.log("El token no es valido");
             console.error(error);
+						respuesta.status(401).json({mensaje:"El token provisto no es valido."});
+						return;
         }
     } else {
         console.log("Se intento acceder a un recurso protegido con un tipo de autenticacion que no soportamos o sin proveer una clave.");
