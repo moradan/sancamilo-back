@@ -9,7 +9,7 @@ const rutasTurnos = require("./src/rutas/rutasTurnos");
 
 const servidor = express();
 
-const PORT = 3000;
+const PORT = 5000;
 
 servidor.use(express.json());
 servidor.use(cors());
@@ -29,5 +29,6 @@ function inicio() {
  * @type {import("express").RequestHandler} 
  */
 function rutaRaiz(pedido, respuesta) {
+	console.log("Servimos el mensaje de bienvenida.");
   respuesta.status(200).json({ mensaje: "Api de SanCamilo" })
 }
