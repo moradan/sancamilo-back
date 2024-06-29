@@ -203,19 +203,25 @@ function modificarUsuario(pedido, respuesta) {
     }
     console.log(comandoSql);
     console.log(valores);
-
+		if(id!=pedido.usuario) {
+			console.log(`modificando el usuario: ${id}\nAutorizado por el usuario: ${pedido.usuario}`);
+			respuesta.status(403).json({mensaje:"Esta tratando de modificar un perfil que no le pertenece."});
+			return;
+		}
+		console.log(`Autorizado por el usuario: ${pedido.usuario}`);
     conexion.query(comandoSql, valores, (error, resultados) => {
         if (error) {
-            console.log("Hubo un error ejecutando la consulta.");
+            console.log("hubo un error ejecutando la consulta.");
             console.error(error);
-            respuesta.status(500).json({ mensaje: "No pudimos hacer la modificaion. Intente mas tarde." });
+            respuesta.status(500).json({ mensaje: "no pudimos hacer la modificaion. intente mas tarde." });
             return;
         } else {
-            console.log("Usuario actualizado.");
+            console.log("usuario actualizado.");
             respuesta.status(200).json(resultados);
             return;
         }
     });
+		//respuesta.status(200).json({mensaje:"Los cambios tuvieron exito"});
 }
 
 /** @type {import("express").RequestHandler} */

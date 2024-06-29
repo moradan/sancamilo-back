@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 /** @type {import("express").RequestHandler} */
 function autenticar(pedido, respuesta, proximo) {
+		console.log("Intengando autenticacion");
     const encabezadoAutorizacion = pedido.headers["authorization"];
     if (!encabezadoAutorizacion) {
         console.log("Se intento acceder a contenido protegido sin proveer un token.");
@@ -14,6 +15,8 @@ function autenticar(pedido, respuesta, proximo) {
         try {
             const contenido = jwt.verify(token, process.env.CLAVE_SECRETA);
             console.log(`Usuario autentificado id: ${contenido.id}`);
+						/** @type {string} */
+						pedido.usuario = contenido.id;
             proximo();
         } catch (error) {
             console.error(error);
