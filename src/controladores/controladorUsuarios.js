@@ -147,6 +147,9 @@ function modificarUsuario(pedido, respuesta) {
     const valores = [];
     for (const propiedad in usuario) {
         // TODO este switch deberia refactorizarse para automatizar la generacion del query.
+        /* una posibilidad es crear un array con las cadenas que representan cada campo y usar la misma cadena para indexarlo
+        como metodo de sanitizar el campo recibido en el pedido.
+        */
         switch (propiedad) {
             case "nombre_completo": {
                 comandoSql = comandoSql.concat("nombre_completo = ?, ");
@@ -203,12 +206,12 @@ function modificarUsuario(pedido, respuesta) {
     }
     console.log(comandoSql);
     console.log(valores);
-		if(id!=pedido.usuario) {
-			console.log(`modificando el usuario: ${id}\nAutorizado por el usuario: ${pedido.usuario}`);
-			respuesta.status(403).json({mensaje:"Esta tratando de modificar un perfil que no le pertenece."});
-			return;
-		}
-		console.log(`Autorizado por el usuario: ${pedido.usuario}`);
+    if (id != pedido.usuario) {
+        console.log(`modificando el usuario: ${id}\nAutorizado por el usuario: ${pedido.usuario}`);
+        respuesta.status(403).json({ mensaje: "Esta tratando de modificar un perfil que no le pertenece." });
+        return;
+    }
+    console.log(`Autorizado por el usuario: ${pedido.usuario}`);
     conexion.query(comandoSql, valores, (error, resultados) => {
         if (error) {
             console.log("hubo un error ejecutando la consulta.");
@@ -221,7 +224,7 @@ function modificarUsuario(pedido, respuesta) {
             return;
         }
     });
-		//respuesta.status(200).json({mensaje:"Los cambios tuvieron exito"});
+    //respuesta.status(200).json({mensaje:"Los cambios tuvieron exito"});
 }
 
 /** @type {import("express").RequestHandler} */
