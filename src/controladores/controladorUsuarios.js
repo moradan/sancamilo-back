@@ -37,6 +37,23 @@ function profesionales(pedido, respuesta) {
         respuesta.status(200).json(resultado);
     })
 }
+/** @type {import("express").RequestHandler} */
+function profesionalesEspecialidad(pedido, respuesta) {
+    const comandoSql = "SELECT * FROM usuarios WHERE especialidad = ?";
+    const idEspecialidad = pedido.params.id;
+    console.log("Consultando la tabla de profesionales.");
+    conexion.query(comandoSql,[idEspecialidad], (error, resultado) => {
+        if (error) {
+            console.log("Ocurrio un error ejecutando la consulta:");
+            console.error(error);
+            respuesta.status(500).json({ mensaje: "No pudimos ejecutar la consulta." });
+            console.log("Respuesta enviada con estado 500.");
+            return;
+        }
+        console.log("Respuesta enviada con lista de profesionales.");
+        respuesta.status(200).json(resultado);
+    })
+}
 
 /** @type {import("express").RequestHandler} */
 function registrarse(pedido, respuesta) {
@@ -256,6 +273,7 @@ function login(pedido, respuesta) {
 module.exports = {
     todos,
     profesionales,
+    profesionalesEspecialidad,
     registrarse,
     filtrarDuplicados,
     borrarUsuario,

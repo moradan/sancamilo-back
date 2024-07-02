@@ -7,6 +7,7 @@ rutas.post("/registrarse", controlador.filtrarDuplicados, controlador.registrars
 rutas.put("/:id", controlador.modificarUsuario);
 rutas.get("/profesionales", controlador.profesionales);
 rutas.delete("/:id", controlador.borrarUsuario);
+rutas.get("/profesionales/:id", controlador.profesionalesEspecialidad);
 rutas.get("/", controlador.todos);
 
 module.exports = rutas;
