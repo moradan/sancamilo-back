@@ -14,6 +14,7 @@ function autenticar(pedido, respuesta, proximo) {
         try {
             const contenido = jwt.verify(token, process.env.CLAVE_SECRETA);
             console.log(`Usuario autentificado id: ${contenido.id}`);
+            res.locals.idUsuario = contenido.id;
             proximo();
         } catch (error) {
             console.error(error);

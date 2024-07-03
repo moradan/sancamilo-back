@@ -50,8 +50,8 @@ function turnosPaciente(pedido, respuesta) {
 
 const nuevoTurno = (pedido, respuesta) => {
     console.log("Procesando el pedido de registrar un turno");
+    const paciente = res.locals.idUsuario;
     const {
-        paciente,
         profesional,
         fecha,
         hora
